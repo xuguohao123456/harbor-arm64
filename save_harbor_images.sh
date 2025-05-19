@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-GIT_BRANCH="v2.11.0"
+GIT_BRANCH="v2.11.1"
 SAVE_DIR="images"
 mkdir "$SAVE_DIR"
 
