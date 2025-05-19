@@ -106,7 +106,7 @@ REGISTRYPASSWORD=
 
 _update_makefile:
 	@echo "update goharbor makefile"
-	@$(SEDCMDI) 's/--rm/--rm --env CGO_ENABLED=0 --env GOOS=linux --env GOARCH=arm64/g' $(HARBOR_MAKEFILE_PATH);
+	@$(SEDCMDI) 's/--rm/--rm --env CGO_ENABLED=0 --env GOOS=linux --env GOARCH=arm64 --env GOPROXY=https://goproxy.cn/g' $(HARBOR_MAKEFILE_PATH);
 	@$(SEDCMDI) 's/$$(DOCKERBUILD)/docker buildx build --platform linux\/arm64 --progress plain --output=type=docker/g' $(HARBOR_MAKEFILE_PATH);
 	@$(SEDCMDI) 's/gen_apis: lint_apis/gen_apis:/g' $(HARBOR_MAKEFILE_PATH);
 	@$(SEDCMDI) 's/_Linux-64bit.tar.gz/_Linux-ARM64.tar.gz/g' $(HARBOR_MAKEFILE_PATH);
@@ -119,19 +119,19 @@ _update_makefile:
 _update_make_photon_makefile:
 	@echo "update goharbor photon makefile"
 	@$(SEDCMDI) 's/$(DOCKERCMD) build/$(DOCKERCMD) buildx build --platform linux\/arm64 --progress plain --output=type=docker/' $(HARBOR_PHOTON_MAKEFILE_PATH)
-	@$(SEDCMDI) '219 a \ \ \ \ \ \ \ \ docker buildx prune -f ; \\' $(HARBOR_PHOTON_MAKEFILE_PATH)
+	#@$(SEDCMDI) '219 a \ \ \ \ \ \ \ \ docker buildx prune -f ; \\' $(HARBOR_PHOTON_MAKEFILE_PATH)
 
 _update_chartserver:
 	@echo "update goharbor chartserver compile.sh"
-	@$(SEDCMDI) 's/go build -a/GOOS=linux GOARCH=arm64 CGO_ENABLED=0 go build -a/g' $(HARBOR_PHOTON_CHARTSERVER_COMPILE_PATH)
+	@$(SEDCMDI) 's/go build -a/GOOS=linux GOARCH=arm64 CGO_ENABLED=0 GOPROXY=https://goproxy.cn go build -a/g' $(HARBOR_PHOTON_CHARTSERVER_COMPILE_PATH)
 
 _update_registry:
 	@echo "update goharbor registry Dockerfile.binary"
-	@$(SEDCMDI) 's/CGO_ENABLED=0/GOOS=linux GOARCH=arm64 CGO_ENABLED=0/g' $(HARBOR_PHOTON_REGISTRY_DOCKERFILE_PATH)
+	@$(SEDCMDI) 's/CGO_ENABLED=0/GOOS=linux GOARCH=arm64 CGO_ENABLED=0 GOPROXY=https://goproxy.cn/g' $(HARBOR_PHOTON_REGISTRY_DOCKERFILE_PATH)
 
 _update_trivy-adapter:
 	@echo "update goharbor trivy-adapter Dockerfile.binary"
-	@$(SEDCMDI) 's/CGO_ENABLED=0/GOARCH=arm64 CGO_ENABLED=0/g' $(HARBOR_PHOTON_TRIVY-ADAPTER_DOCKERFILE_PATH)
+	@$(SEDCMDI) 's/CGO_ENABLED=0/GOARCH=arm64 CGO_ENABLED=0 GOPROXY=https://goproxy.cn/g' $(HARBOR_PHOTON_TRIVY-ADAPTER_DOCKERFILE_PATH)
 
 _update_portal:
 	@echo "update goharbor portal Dockerfile"
@@ -140,13 +140,15 @@ _update_portal:
 
 _update_notary:
 	@echo "update goharbor notary binary.Dockerfile"
-	@$(SEDCMDI) '8 a ENV CGO_ENABLED 0 \nENV GOOS linux \nENV GOARCH arm64' $(HARBOR_PHOTON_NOTARY_DOCKERFILE_PATH)
+	@$(SEDCMDI) '8 a ENV CGO_ENABLED 0 \nENV GOOS linux \nENV GOARCH arm64 \nENV GOPROXY=https://goproxy.cn' $(HARBOR_PHOTON_NOTARY_DOCKERFILE_PATH)
 	@echo "update goharbor notary builder"
 	@$(SEDCMDI)	's/docker build/docker buildx build --platform linux\/arm64 --progress plain --output=type=docker/g' $(HARBOR_PHOTON_NOTARY_BUILDER_PATH)
 
 _update_exporter:
 	@echo "update goharbor exporter Dockerfile"
 	@$(SEDCMDI) 's/ENV GOARCH=amd64/ENV GOARCH=arm64/g' $(HARBOR_PHOTON_EXPORTER_PATH)
+	@$(SEDCMDI) '/ENV GOARCH=arm64/a ENV GOPROXY=https://goproxy.cn' $(HARBOR_PHOTON_EXPORTER_PATH)
+
 
 
 
