@@ -3,7 +3,7 @@
 # Clone harbor ARM64 code
 # git clone https://github.com/amy5200/harbor-arm64.git
 
-GIT_BRANCH="v2.11.0"
+GIT_BRANCH="v2.11.1"
 DOCKER_CLI_EXPERIMENTAL="enabled"
 ARCH="arm64"
 DOCKER_DEFAULT_PLATFORM="linux/arm64"
