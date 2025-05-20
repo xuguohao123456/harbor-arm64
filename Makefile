@@ -114,6 +114,7 @@ _update_makefile:
 	@$(SEDCMDI) 's/VERSIONTAG=dev/VERSIONTAG=dev-arm/g' $(HARBOR_MAKEFILE_PATH);
 	@$(SEDCMDI) 's/BASEIMAGETAG=dev/BASEIMAGETAG=dev-arm/g' $(HARBOR_MAKEFILE_PATH);
 	@$(SEDCMDI) 's/BUILD_PG96=true/BUILD_PG96=false/g' $(HARBOR_MAKEFILE_PATH);
+	@$(SEDCMDI) 's/NPM_REGISTRY=https://registry.npmjs.org/NPM_REGISTRY=https://registry.npmmirror.com/g' $(HARBOR_MAKEFILE_PATH);
 	
 
 _update_make_photon_makefile:
